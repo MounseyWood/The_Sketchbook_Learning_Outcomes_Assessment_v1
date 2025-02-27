@@ -5,23 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Design Sketchbook Feedback Tool</title>
     
-    <!-- Load React -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
-    
-    <!-- Load Babel to handle JSX -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
-    
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
     <style>
+        /* Base styles */
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #f8f8f8;
             padding: 0;
             margin: 0;
             color: #333;
+            line-height: 1.6;
         }
         
         .content-wrapper {
@@ -45,22 +37,21 @@
             padding-bottom: 20px;
         }
         
-        .button {
-            display: inline-block;
-            background-color: #FFE800;
-            color: #000;
-            font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            margin: 10px 0;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        h1 {
+            font-size: 24px;
+            margin-bottom: 16px;
         }
         
-        .button:hover {
-            background-color: #e6d000;
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+        
+        h3 {
+            font-size: 16px;
+            margin-top: 16px;
+            margin-bottom: 8px;
         }
         
         .footer {
@@ -71,18 +62,212 @@
             font-size: 0.9rem;
             border-top: 1px solid #eee;
         }
+        
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 4px;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-grade {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        .btn-grade.active {
+            outline: 2px solid #666;
+            outline-offset: 2px;
+        }
+        
+        .btn-outcome {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        .btn-outcome.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        /* Content sections */
+        .grade-section {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            color: white;
+        }
+        
+        .outcome-content {
+            background-color: #f9fafb;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+        
+        .feedback-card {
+            background-color: white;
+            padding: 16px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 16px;
+        }
+        
+        .advice-section {
+            background-color: #f9fafb;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+        
+        .note {
+            font-size: 14px;
+            color: #666;
+            padding: 12px;
+            background-color: #f1f1f1;
+            border-left: 4px solid #eab308;
+            margin-top: 24px;
+        }
+        
+        /* Grade colors */
+        .first-plus {
+            background-color: #15803d;
+        }
+        
+        .first {
+            background-color: #16a34a;
+        }
+        
+        .upper-second {
+            background-color: #22c55e;
+        }
+        
+        .lower-second {
+            background-color: #facc15;
+            color: black;
+        }
+        
+        .third {
+            background-color: #eab308;
+            color: black;
+        }
+        
+        .marginal-fail {
+            background-color: #f59e0b;
+            color: black;
+        }
+        
+        .fail {
+            background-color: #dc2626;
+        }
+        
+        .strength-title {
+            color: #15803d;
+            font-weight: 700;
+        }
+        
+        .evidence-title {
+            color: #2563eb;
+            font-weight: 700;
+        }
+        
+        .improvement-title {
+            color: #b45309;
+            font-weight: 700;
+        }
+        
+        /* List styling */
+        ul.advice-list {
+            list-style-type: disc;
+            padding-left: 24px;
+        }
+        
+        ul.advice-list li {
+            margin-bottom: 8px;
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        
+        /* Hide elements by default */
+        .outcome-content, .advice-content {
+            display: none;
+        }
+        
+        /* Show active elements */
+        .outcome-content.active, .advice-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
         <div class="content">
             <div class="header">
-                <h1 class="text-2xl font-bold mb-4">Fashion Design Sketchbook Feedback Tool</h1>
+                <h1>Fashion Design Sketchbook Feedback Tool</h1>
                 <p>Module FN4004 Design Process 1 - Element E1: SKETCHBOOK</p>
-                <p class="mt-2 text-sm">This interactive tool helps provide structured feedback aligned with Learning Outcomes and Grade Descriptors for the Fashion BA Sketchbook assessment.</p>
+                <p style="font-size: 14px; margin-top: 12px; background-color: #f1f1f1; padding: 12px; border-radius: 4px;">
+                    This interactive tool helps provide structured feedback aligned with Learning Outcomes and Grade Descriptors for the Fashion BA Sketchbook assessment.
+                </p>
             </div>
             
-            <div id="feedback-app"></div>
+            <div id="feedback-app">
+                <!-- Grade Selection Section -->
+                <div>
+                    <h2>Select Grade Band</h2>
+                    <div class="buttons-container" id="grade-buttons">
+                        <!-- Buttons will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Selected Grade Header -->
+                <div id="grade-header" class="grade-section first-plus">
+                    <h2 id="grade-title">First Class (A+) (85-100%)</h2>
+                    <p id="grade-quality" style="font-size: 18px;">Overall Quality: Outstanding</p>
+                </div>
+                
+                <!-- Learning Outcome Tabs -->
+                <div>
+                    <h2>Select Learning Outcome</h2>
+                    <div class="buttons-container" id="outcome-buttons">
+                        <!-- Buttons will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Learning Outcome Content -->
+                <div id="outcome-content-container">
+                    <!-- Content will be inserted here by JavaScript -->
+                </div>
+                
+                <!-- Overall Advice for Selected Grade -->
+                <div id="advice-section" class="advice-section">
+                    <h3>How to improve your overall grade:</h3>
+                    <ul class="advice-list" id="advice-list">
+                        <!-- Content will be inserted here by JavaScript -->
+                    </ul>
+                </div>
+                
+                <!-- Footer Note -->
+                <div class="note">
+                    <p>Note: This tool provides guidance based on Kingston School of Art Fashion BA grade descriptors. Always refer to official course documentation for definitive assessment criteria.</p>
+                </div>
+            </div>
         </div>
         
         <div class="footer">
@@ -91,61 +276,51 @@
         </div>
     </div>
     
-    <script type="text/babel">
-        const FeedbackTool = () => {
-            const [selectedGrade, setSelectedGrade] = React.useState('first-plus');
-            const [activeOutcome, setActiveOutcome] = React.useState('outcome1');
-            
-            // Grade definitions
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Grade data
             const grades = [
                 {
                     id: 'first-plus',
                     title: 'First Class (A+)',
                     range: '85-100%',
-                    color: 'bg-green-700',
-                    textColor: 'text-white'
+                    quality: 'Outstanding'
                 },
                 {
                     id: 'first',
                     title: 'First Class (A)',
                     range: '70-84%',
-                    color: 'bg-green-600',
-                    textColor: 'text-white'
+                    quality: 'Very Good'
                 },
                 {
                     id: 'upper-second',
                     title: 'Upper Second (B)',
                     range: '60-69%',
-                    color: 'bg-green-500',
-                    textColor: 'text-white'
+                    quality: 'Good'
                 },
                 {
                     id: 'lower-second',
                     title: 'Lower Second (C)',
                     range: '50-59%',
-                    color: 'bg-yellow-400',
-                    textColor: 'text-black'
+                    quality: 'Satisfactory'
                 },
                 {
                     id: 'third',
                     title: 'Third Class (D)',
                     range: '40-49%',
-                    color: 'bg-yellow-500',
-                    textColor: 'text-black'
+                    quality: 'Adequate'
                 },
                 {
                     id: 'marginal-fail',
                     title: 'Marginal Fail (FM)',
                     range: '35-39%',
-                    color: 'bg-amber-500',
-                    textColor: 'text-black'
+                    quality: 'Unsatisfactory'
                 },
                 {
                     id: 'fail',
                     title: 'Fail (F)',
                     range: '0-34%',
-                    color: 'bg-red-600',
-                    textColor: 'text-white'
+                    quality: 'Poor'
                 }
             ];
             
@@ -363,185 +538,216 @@
                 }
             ];
             
-            // Get active grade and outcome data
-            const activeGradeData = grades.find(grade => grade.id === selectedGrade);
-            const activeOutcomeData = learningOutcomes.find(outcome => outcome.id === activeOutcome);
-            
-            // Overall advice for improving grade based on selected grade
-            const getOverallImprovement = () => {
-                switch(selectedGrade) {
-                    case 'fail':
-                        return (
-                            <>
-                                <li>Develop basic understanding of research methods and design processes</li>
-                                <li>Begin to analyze materials rather than just describing them</li>
-                                <li>Improve documentation of your design development process</li>
-                                <li>Show evidence of basic material investigation</li>
-                                <li>Practice fundamental presentation techniques</li>
-                            </>
-                        );
-                    case 'marginal-fail':
-                        return (
-                            <>
-                                <li>Strengthen your research with more diverse sources</li>
-                                <li>Show clearer connections between research and design development</li>
-                                <li>Improve organization and documentation of your design process</li>
-                                <li>Conduct more thorough material investigations</li>
-                                <li>Practice basic presentation techniques for more professional outcomes</li>
-                            </>
-                        );
-                    case 'third':
-                        return (
-                            <>
-                                <li>Expand your research beyond obvious sources</li>
-                                <li>Develop better analytical skills rather than just describing</li>
-                                <li>Improve organization of your design development process</li>
-                                <li>Conduct more detailed material investigations with clearer evaluation</li>
-                                <li>Show more consistent professionalism in presentation</li>
-                            </>
-                        );
-                    case 'lower-second':
-                        return (
-                            <>
-                                <li>Deepen your research and show stronger critical analysis</li>
-                                <li>Make clearer connections between research and design development</li>
-                                <li>Show more creative exploration in your design process</li>
-                                <li>Enhance material investigations with more thoughtful evaluation</li>
-                                <li>Improve consistency in professional presentation standards</li>
-                            </>
-                        );
-                    case 'upper-second':
-                        return (
-                            <>
-                                <li>Extend research beyond expected sources with deeper critical analysis</li>
-                                <li>Show more innovative connections between research and design</li>
-                                <li>Demonstrate more creative exploration and risk-taking</li>
-                                <li>Develop more sophisticated evaluation of materials and applications</li>
-                                <li>Refine presentation techniques for more professional outcomes</li>
-                            </>
-                        );
-                    case 'first':
-                        return (
-                            <>
-                                <li>Push research to discover unexpected connections and insights</li>
-                                <li>Take more creative risks that result in innovative outcomes</li>
-                                <li>Demonstrate exceptional critical thinking throughout</li>
-                                <li>Perfect technical execution in all aspects</li>
-                                <li>Explore innovative presentation methods while maintaining clarity</li>
-                            </>
-                        );
-                    case 'first-plus':
-                        return (
-                            <>
-                                <li>Continue your outstanding work across all learning outcomes</li>
-                                <li>Consider mentoring others to share your exceptional approach</li>
-                                <li>Explore opportunities to showcase your work professionally</li>
-                                <li>Maintain your excellent standard while continuing to innovate</li>
-                            </>
-                        );
-                    default:
-                        return null;
-                }
+            // Overall improvement advice by grade
+            const overallImprovements = {
+                'fail': [
+                    'Develop basic understanding of research methods and design processes',
+                    'Begin to analyze materials rather than just describing them',
+                    'Improve documentation of your design development process',
+                    'Show evidence of basic material investigation',
+                    'Practice fundamental presentation techniques'
+                ],
+                'marginal-fail': [
+                    'Strengthen your research with more diverse sources',
+                    'Show clearer connections between research and design development',
+                    'Improve organization and documentation of your design process',
+                    'Conduct more thorough material investigations',
+                    'Practice basic presentation techniques for more professional outcomes'
+                ],
+                'third': [
+                    'Expand your research beyond obvious sources',
+                    'Develop better analytical skills rather than just describing',
+                    'Improve organization of your design development process',
+                    'Conduct more detailed material investigations with clearer evaluation',
+                    'Show more consistent professionalism in presentation'
+                ],
+                'lower-second': [
+                    'Deepen your research and show stronger critical analysis',
+                    'Make clearer connections between research and design development',
+                    'Show more creative exploration in your design process',
+                    'Enhance material investigations with more thoughtful evaluation',
+                    'Improve consistency in professional presentation standards'
+                ],
+                'upper-second': [
+                    'Extend research beyond expected sources with deeper critical analysis',
+                    'Show more innovative connections between research and design',
+                    'Demonstrate more creative exploration and risk-taking',
+                    'Develop more sophisticated evaluation of materials and applications',
+                    'Refine presentation techniques for more professional outcomes'
+                ],
+                'first': [
+                    'Push research to discover unexpected connections and insights',
+                    'Take more creative risks that result in innovative outcomes',
+                    'Demonstrate exceptional critical thinking throughout',
+                    'Perfect technical execution in all aspects',
+                    'Explore innovative presentation methods while maintaining clarity'
+                ],
+                'first-plus': [
+                    'Continue your outstanding work across all learning outcomes',
+                    'Consider mentoring others to share your exceptional approach',
+                    'Explore opportunities to showcase your work professionally',
+                    'Maintain your excellent standard while continuing to innovate'
+                ]
             };
             
-            return (
-                <div className="max-w-5xl mx-auto">
-                    {/* Grade Selection Section */}
-                    <div className="mb-6">
-                        <h2 className="text-xl font-bold mb-3">Select Grade Band</h2>
-                        <div className="flex flex-wrap gap-2 justify-center">
-                            {grades.map(grade => (
-                                <button
-                                    key={grade.id}
-                                    className={`px-4 py-2 rounded-md font-medium transition-all ${
-                                        selectedGrade === grade.id ? 
-                                        `${grade.color} ${grade.textColor} ring-2 ring-offset-2 ring-gray-400` : 
-                                        'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                                    onClick={() => setSelectedGrade(grade.id)}
-                                >
-                                    {grade.title} <span className="text-sm">{grade.range}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+            // Initialize with default selections
+            let currentGradeId = 'first-plus';
+            let currentOutcomeId = 'outcome1';
+            
+            // Initialize the UI
+            initializeGradeButtons();
+            initializeOutcomeButtons();
+            updateGradeSection(currentGradeId);
+            updateOutcomeContent(currentOutcomeId, currentGradeId);
+            updateAdviceSection(currentGradeId);
+            
+            // Function to initialize grade buttons
+            function initializeGradeButtons() {
+                const gradeButtonsContainer = document.getElementById('grade-buttons');
+                
+                // Create buttons for each grade
+                grades.forEach(grade => {
+                    const button = document.createElement('button');
+                    button.className = `btn btn-grade ${grade.id === currentGradeId ? 'active' : ''}`;
+                    button.dataset.gradeId = grade.id;
+                    button.innerHTML = `${grade.title} <span style="font-size: 0.8em;">${grade.range}</span>`;
                     
-                    {/* Selected Grade Header */}
-                    <div className={`${activeGradeData.color} ${activeGradeData.textColor} p-4 rounded-lg mb-6`}>
-                        <h2 className="text-xl font-bold">{activeGradeData.title} ({activeGradeData.range})</h2>
-                        <p className="text-lg">
-                            Overall Quality: {
-                                selectedGrade === 'first-plus' ? 'Outstanding' :
-                                selectedGrade === 'first' ? 'Very Good' :
-                                selectedGrade === 'upper-second' ? 'Good' :
-                                selectedGrade === 'lower-second' ? 'Satisfactory' :
-                                selectedGrade === 'third' ? 'Adequate' :
-                                selectedGrade === 'marginal-fail' ? 'Unsatisfactory' : 'Poor'
-                            }
-                        </p>
-                    </div>
+                    // Add class for grade-specific styling
+                    button.classList.add(grade.id);
                     
-                    {/* Learning Outcome Tabs */}
-                    <div className="mb-6">
-                        <h2 className="text-xl font-bold mb-3">Select Learning Outcome</h2>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                            {learningOutcomes.map(outcome => (
-                                <button
-                                    key={outcome.id}
-                                    className={`px-3 py-2 rounded-md font-medium text-sm transition-all ${
-                                        activeOutcome === outcome.id ? 
-                                        'bg-blue-600 text-white' : 
-                                        'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                                    onClick={() => setActiveOutcome(outcome.id)}
-                                >
-                                    {outcome.title.split(':')[0]}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                    
-                    {/* Learning Outcome Content */}
-                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
-                        <h2 className="text-xl font-bold mb-2">{activeOutcomeData.title}</h2>
-                        <p className="text-gray-700 mb-4">{activeOutcomeData.description}</p>
+                    // Add click handler
+                    button.addEventListener('click', function() {
+                        // Update active state for all grade buttons
+                        document.querySelectorAll('.btn-grade').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        this.classList.add('active');
                         
-                        <div className="mt-6 space-y-4">
-                            <div className="bg-white p-4 rounded border border-gray-200">
-                                <h3 className="font-bold text-green-700 mb-2">Strengths:</h3>
-                                <p>{activeOutcomeData.feedback[selectedGrade].strength}</p>
-                            </div>
-                            
-                            <div className="bg-white p-4 rounded border border-gray-200">
-                                <h3 className="font-bold text-blue-700 mb-2">Evidence in Sketchbook:</h3>
-                                <p>{activeOutcomeData.feedback[selectedGrade].evidence}</p>
-                            </div>
-                            
-                            <div className="bg-white p-4 rounded border border-gray-200">
-                                <h3 className="font-bold text-amber-700 mb-2">Areas for Improvement:</h3>
-                                <p>{activeOutcomeData.feedback[selectedGrade].improvement}</p>
-                            </div>
-                        </div>
+                        // Update current grade
+                        currentGradeId = this.dataset.gradeId;
+                        
+                        // Update UI
+                        updateGradeSection(currentGradeId);
+                        updateOutcomeContent(currentOutcomeId, currentGradeId);
+                        updateAdviceSection(currentGradeId);
+                    });
+                    
+                    gradeButtonsContainer.appendChild(button);
+                });
+            }
+            
+            // Function to initialize outcome buttons
+            function initializeOutcomeButtons() {
+                const outcomeButtonsContainer = document.getElementById('outcome-buttons');
+                
+                // Create buttons for each learning outcome
+                learningOutcomes.forEach(outcome => {
+                    const button = document.createElement('button');
+                    button.className = `btn btn-outcome ${outcome.id === currentOutcomeId ? 'active' : ''}`;
+                    button.dataset.outcomeId = outcome.id;
+                    button.textContent = outcome.title.split(':')[0];
+                    
+                    // Add click handler
+                    button.addEventListener('click', function() {
+                        // Update active state for all outcome buttons
+                        document.querySelectorAll('.btn-outcome').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // Update current outcome
+                        currentOutcomeId = this.dataset.outcomeId;
+                        
+                        // Update UI
+                        updateOutcomeContent(currentOutcomeId, currentGradeId);
+                    });
+                    
+                    outcomeButtonsContainer.appendChild(button);
+                });
+                
+                // Initialize outcome content container
+                const outcomeContainer = document.getElementById('outcome-content-container');
+                learningOutcomes.forEach(outcome => {
+                    const div = document.createElement('div');
+                    div.id = `outcome-${outcome.id}`;
+                    div.className = `outcome-content ${outcome.id === currentOutcomeId ? 'active' : ''}`;
+                    outcomeContainer.appendChild(div);
+                });
+            }
+            
+            // Function to update the grade section
+            function updateGradeSection(gradeId) {
+                const grade = grades.find(g => g.id === gradeId);
+                const gradeHeader = document.getElementById('grade-header');
+                const gradeTitle = document.getElementById('grade-title');
+                const gradeQuality = document.getElementById('grade-quality');
+                
+                // Update content
+                gradeTitle.textContent = `${grade.title} (${grade.range})`;
+                gradeQuality.textContent = `Overall Quality: ${grade.quality}`;
+                
+                // Update classes for styling
+                gradeHeader.className = 'grade-section';
+                gradeHeader.classList.add(grade.id);
+            }
+            
+            // Function to update outcome content
+            function updateOutcomeContent(outcomeId, gradeId) {
+                // Find data
+                const outcome = learningOutcomes.find(o => o.id === outcomeId);
+                const feedback = outcome.feedback[gradeId];
+                
+                // Get content container
+                const contentContainer = document.getElementById(`outcome-${outcomeId}`);
+                
+                // Clear previous content
+                contentContainer.innerHTML = '';
+                
+                // Create new content
+                const html = `
+                    <h2>${outcome.title}</h2>
+                    <p>${outcome.description}</p>
+                    
+                    <div class="feedback-card">
+                        <p class="strength-title">Strengths:</p>
+                        <p>${feedback.strength}</p>
                     </div>
                     
-                    {/* Overall Advice for Selected Grade */}
-                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
-                        <h3 className="font-bold text-lg mb-3">How to improve your overall grade:</h3>
-                        <ul className="list-disc pl-5 space-y-2">
-                            {getOverallImprovement()}
-                        </ul>
+                    <div class="feedback-card">
+                        <p class="evidence-title">Evidence in Sketchbook:</p>
+                        <p>${feedback.evidence}</p>
                     </div>
                     
-                    {/* Footer Note */}
-                    <div className="text-sm text-gray-500 mt-6 p-3 bg-gray-100 border-l-4 border-yellow-400">
-                        <p>Note: This tool provides guidance based on Kingston School of Art Fashion BA grade descriptors. Always refer to official course documentation for definitive assessment criteria.</p>
+                    <div class="feedback-card">
+                        <p class="improvement-title">Areas for Improvement:</p>
+                        <p>${feedback.improvement}</p>
                     </div>
-                </div>
-            );
-        };
-        
-        // Render the app
-        ReactDOM.render(<FeedbackTool />, document.getElementById('feedback-app'));
+                `;
+                
+                contentContainer.innerHTML = html;
+                
+                // Show the active outcome content
+                document.querySelectorAll('.outcome-content').forEach(el => {
+                    el.classList.remove('active');
+                });
+                contentContainer.classList.add('active');
+            }
+            
+            // Function to update advice section
+            function updateAdviceSection(gradeId) {
+                const adviceList = document.getElementById('advice-list');
+                
+                // Clear previous content
+                adviceList.innerHTML = '';
+                
+                // Add new advice items
+                overallImprovements[gradeId].forEach(advice => {
+                    const li = document.createElement('li');
+                    li.textContent = advice;
+                    adviceList.appendChild(li);
+                });
+            }
+        });
     </script>
 </body>
 </html>
