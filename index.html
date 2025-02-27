@@ -1,0 +1,441 @@
+import React, { useState } from 'react';
+
+const FashionSketchbookFeedback = () => {
+  const [selectedGrade, setSelectedGrade] = useState('first-plus');
+  const [activeTab, setActiveTab] = useState('outcome1');
+
+  const grades = [
+    {
+      id: 'first-plus',
+      title: 'First Class (A+)',
+      range: '85-100%',
+      color: 'bg-green-700',
+      textColor: 'text-white'
+    },
+    {
+      id: 'first',
+      title: 'First Class (A)',
+      range: '70-84%',
+      color: 'bg-green-600',
+      textColor: 'text-white'
+    },
+    {
+      id: 'upper-second',
+      title: 'Upper Second (B)',
+      range: '60-69%',
+      color: 'bg-green-500',
+      textColor: 'text-white'
+    },
+    {
+      id: 'lower-second',
+      title: 'Lower Second (C)',
+      range: '50-59%',
+      color: 'bg-yellow-400',
+      textColor: 'text-black'
+    },
+    {
+      id: 'third',
+      title: 'Third Class (D)',
+      range: '40-49%',
+      color: 'bg-yellow-500',
+      textColor: 'text-black'
+    },
+    {
+      id: 'marginal-fail',
+      title: 'Marginal Fail (FM)',
+      range: '35-39%',
+      color: 'bg-amber-500',
+      textColor: 'text-black'
+    },
+    {
+      id: 'fail',
+      title: 'Fail (F)',
+      range: '0-34%',
+      color: 'bg-red-600',
+      textColor: 'text-white'
+    }
+  ];
+
+  const learningOutcomes = [
+    {
+      id: 'outcome1',
+      title: 'LO1: Research for Creative Design',
+      description: 'Demonstrate the ability to use research sources as a basis for creative design by exploring, evaluating and originating ideas into contemporary fashion concepts.',
+      feedback: {
+        'first-plus': {
+          strength: 'Outstanding and exceptional use of research sources that go far beyond requirements, showcasing unique insights and original thinking.',
+          evidence: 'Sketchbook demonstrates comprehensive exploration of diverse and unexpected research sources, with sophisticated evaluation and critical analysis.',
+          improvement: 'Continue developing your exceptional research approach by exploring even more specialized or interdisciplinary sources that could further push fashion boundaries.'
+        },
+        'first': {
+          strength: 'Excellent use of research sources showing deep understanding and creative application to design development.',
+          evidence: 'Strong evidence of critical analysis of research, with creative and thoughtful translation into contemporary fashion concepts.',
+          improvement: 'To reach A+ level, push your research beyond the expected sources and demonstrate more innovative connections between research and design concepts.'
+        },
+        'upper-second': {
+          strength: 'Good ability to use research sources as a foundation for creative design work with solid evaluation skills.',
+          evidence: 'Clear evidence of research informing design decisions with thoughtful exploration of ideas and concepts.',
+          improvement: 'Deepen your critical analysis of research sources and show more creative connections between research and design development to move toward a First.'
+        },
+        'lower-second': {
+          strength: 'Satisfactory use of research sources with some evidence of evaluation and idea development.',
+          evidence: 'Basic research foundation with some connection to design development, though analysis could be more thorough.',
+          improvement: 'Focus on developing stronger analytical skills when evaluating research, and show clearer connections between research and design outcomes.'
+        },
+        'third': {
+          strength: 'Adequate use of research sources with basic understanding of how to apply them to design.',
+          evidence: 'Some research present but with limited depth and evaluation, mostly descriptive rather than analytical.',
+          improvement: 'Expand your research beyond obvious sources and develop your analytical skills to evaluate research more critically.'
+        },
+        'marginal-fail': {
+          strength: 'Limited understanding of how to use research sources for design development.',
+          evidence: 'Minimal research with little or no evaluation, and weak connections to design concepts.',
+          improvement: 'Build a more structured approach to research, gathering more diverse sources and practice analyzing them in relation to your design ideas.'
+        },
+        'fail': {
+          strength: 'Very little evidence of research informing design work.',
+          evidence: 'Insufficient research with no analysis or evaluation, disconnected from design development.',
+          improvement: 'Develop a basic understanding of research methods and how to apply research to inform design decisions and concepts.'
+        }
+      }
+    },
+    {
+      id: 'outcome2',
+      title: 'LO2: Design Development Process',
+      description: 'Demonstrate confidence in the ability to creatively generate, collate and record information appropriate to the design development process.',
+      feedback: {
+        'first-plus': {
+          strength: 'Exceptional confidence and creativity in generating, organizing, and documenting design development.',
+          evidence: 'Sketchbook shows outstanding progression of ideas with innovative approaches to recording design development and expert organization of information.',
+          improvement: 'Continue your excellent practice, perhaps exploring even more innovative methods of recording and presenting your design process.'
+        },
+        'first': {
+          strength: 'Excellent ability to confidently generate creative ideas and record them effectively throughout the design process.',
+          evidence: 'Very well-organized sketchbook with creative and thorough documentation of the design development journey.',
+          improvement: 'To reach A+ level, experiment with more innovative or unexpected methods of recording your design process and organizing information.'
+        },
+        'upper-second': {
+          strength: 'Good confidence in generating and recording design ideas with clear progression.',
+          evidence: 'Well-documented design development with logical organization and progression of ideas.',
+          improvement: 'Work on developing more creative approaches to recording your design process and show more confidence in pursuing original ideas.'
+        },
+        'lower-second': {
+          strength: 'Satisfactory ability to generate and record design information with some creative elements.',
+          evidence: 'Adequate documentation of design development but lacks some clarity or creativity in organization.',
+          improvement: 'Improve the creativity and clarity in how you document your design process, showing more thoughtful organization and progression of ideas.'
+        },
+        'third': {
+          strength: 'Basic ability to generate and record design ideas.',
+          evidence: 'Some documentation of design development but lacks organization and creative recording methods.',
+          improvement: 'Develop a more structured approach to organizing your sketchbook and experiment with more creative ways to record your design process.'
+        },
+        'marginal-fail': {
+          strength: 'Limited ability to generate or record design information.',
+          evidence: 'Poor documentation with little evidence of design development or organization.',
+          improvement: 'Practice basic methods of recording design development and organizing information in a logical sequence.'
+        },
+        'fail': {
+          strength: 'Insufficient evidence of generating or recording design information.',
+          evidence: 'Minimal or chaotic documentation with no clear design development process.',
+          improvement: 'Learn and apply fundamental principles of documenting design development and organizing information appropriately.'
+        }
+      }
+    },
+    {
+      id: 'outcome3',
+      title: 'LO3: Material Understanding',
+      description: 'Develop an understanding of material qualities and evaluate their application and appropriateness to design outcomes.',
+      feedback: {
+        'first-plus': {
+          strength: 'Outstanding understanding of materials with exceptional ability to evaluate their qualities for innovative design applications.',
+          evidence: 'Sketchbook demonstrates sophisticated material exploration with expert evaluation of properties and highly creative applications.',
+          improvement: 'Continue your exceptional material investigations, perhaps exploring even more sustainable or cutting-edge materials.'
+        },
+        'first': {
+          strength: 'Excellent understanding of material qualities with very good evaluation skills for design outcomes.',
+          evidence: 'Strong material investigation with thoughtful analysis of properties and creative applications in design work.',
+          improvement: 'To reach A+ level, deepen your exploration of material innovation and consider more experimental applications in your designs.'
+        },
+        'upper-second': {
+          strength: 'Good understanding of material qualities with solid evaluation of their design applications.',
+          evidence: 'Clear evidence of material investigation with appropriate evaluation of properties for design outcomes.',
+          improvement: 'Develop a more sophisticated understanding of material properties and experiment with more creative or unexpected applications.'
+        },
+        'lower-second': {
+          strength: 'Satisfactory understanding of materials with some evaluation of their design applications.',
+          evidence: 'Some material investigation present but evaluation could be more thorough or creative.',
+          improvement: 'Enhance your material investigation with more in-depth analysis of properties and more thoughtful consideration of design applications.'
+        },
+        'third': {
+          strength: 'Basic understanding of materials with limited evaluation of their design applications.',
+          evidence: 'Minimal material investigation with superficial evaluation of properties.',
+          improvement: 'Develop a more structured approach to investigating materials and practice evaluating their properties for specific design outcomes.'
+        },
+        'marginal-fail': {
+          strength: 'Limited understanding of materials with very little evaluation.',
+          evidence: 'Insufficient material investigation with poor consideration of properties or applications.',
+          improvement: 'Build basic knowledge of material properties and practice simple evaluation techniques for design applications.'
+        },
+        'fail': {
+          strength: 'Very little evidence of material understanding or evaluation.',
+          evidence: 'Almost no material investigation or consideration of properties in relation to design.',
+          improvement: 'Learn fundamental principles of material properties and how they relate to design outcomes.'
+        }
+      }
+    },
+    {
+      id: 'outcome4',
+      title: 'LO4: Historical & Ethical Research',
+      description: 'Demonstrate the ability to research into creative concepts that recognise historical and/or ethical and social considerations.',
+      feedback: {
+        'first-plus': {
+          strength: 'Exceptional ability to research creative concepts with outstanding recognition of historical, ethical, and social contexts.',
+          evidence: 'Sketchbook demonstrates sophisticated understanding of complex historical and ethical considerations with unique perspectives.',
+          improvement: 'Continue your excellent contextual research, perhaps exploring even more nuanced ethical or cultural considerations in fashion.'
+        },
+        'first': {
+          strength: 'Excellent research into creative concepts with strong historical, ethical, and social awareness.',
+          evidence: 'Very good integration of historical and ethical considerations in research and design development.',
+          improvement: 'To reach A+ level, develop even deeper insights into historical contexts or ethical considerations that challenge conventional thinking.'
+        },
+        'upper-second': {
+          strength: 'Good ability to research creative concepts with clear recognition of historical and ethical considerations.',
+          evidence: 'Solid research with appropriate acknowledgment of historical and ethical contexts in design work.',
+          improvement: 'Deepen your exploration of historical or ethical contexts and show more sophisticated integration into your creative concepts.'
+        },
+        'lower-second': {
+          strength: 'Satisfactory research with some recognition of historical and ethical considerations.',
+          evidence: 'Basic research into historical or ethical contexts but connections to design work could be stronger.',
+          improvement: 'Strengthen your research into historical and ethical contexts and make clearer connections to your design development.'
+        },
+        'third': {
+          strength: 'Basic research with limited recognition of historical or ethical considerations.',
+          evidence: 'Some attempt to acknowledge historical or ethical contexts but lacks depth or relevance.',
+          improvement: 'Develop a more structured approach to researching historical and ethical contexts and practice applying these to your design work.'
+        },
+        'marginal-fail': {
+          strength: 'Limited research with minimal recognition of historical or ethical considerations.',
+          evidence: 'Poor integration of historical or ethical contexts in research or design work.',
+          improvement: 'Build basic understanding of how historical and ethical considerations influence fashion design and practice incorporating these into your research.'
+        },
+        'fail': {
+          strength: 'Very little evidence of research into historical or ethical considerations.',
+          evidence: 'Almost no acknowledgment of historical or ethical contexts in relation to design.',
+          improvement: 'Learn fundamental principles of historical and ethical research in fashion and begin to incorporate these into your design thinking.'
+        }
+      }
+    },
+    {
+      id: 'outcome5',
+      title: 'LO5: Design Communication',
+      description: 'Communicate design outcomes using a variety of traditional and contemporary methods appropriate to professional contexts.',
+      feedback: {
+        'first-plus': {
+          strength: 'Outstanding communication of design outcomes using exceptionally skilled and innovative methods.',
+          evidence: 'Sketchbook demonstrates mastery of both traditional and contemporary communication techniques with professional excellence.',
+          improvement: 'Continue exploring cutting-edge communication methods while maintaining your exceptional standard of presentation.'
+        },
+        'first': {
+          strength: 'Excellent communication of design outcomes using highly skilled traditional and contemporary methods.',
+          evidence: 'Very professional presentation with creative and effective communication techniques throughout.',
+          improvement: 'To reach A+ level, experiment with more innovative or unexpected communication methods that push boundaries while maintaining clarity.'
+        },
+        'upper-second': {
+          strength: 'Good communication of design outcomes with skillful use of appropriate methods.',
+          evidence: 'Professional presentation with clear and effective communication of design ideas.',
+          improvement: 'Develop more creative and sophisticated communication techniques and ensure consistent professional quality throughout.'
+        },
+        'lower-second': {
+          strength: 'Satisfactory communication of design outcomes using appropriate methods.',
+          evidence: 'Adequate presentation that communicates design ideas but lacks some refinement or creativity.',
+          improvement: 'Improve the consistency and creativity of your communication methods, paying more attention to professional presentation standards.'
+        },
+        'third': {
+          strength: 'Basic communication of design outcomes with limited method variety.',
+          evidence: 'Some attempt at presenting design ideas but lacks professionalism or technique variety.',
+          improvement: 'Develop a wider range of communication techniques and practice applying them to present your ideas more professionally.'
+        },
+        'marginal-fail': {
+          strength: 'Limited ability to communicate design outcomes effectively.',
+          evidence: 'Poor presentation with inadequate communication of design ideas.',
+          improvement: 'Learn and practice basic presentation techniques and focus on clearly communicating your design intentions.'
+        },
+        'fail': {
+          strength: 'Very little evidence of ability to communicate design outcomes.',
+          evidence: 'Minimal or ineffective presentation with unclear communication of design ideas.',
+          improvement: 'Develop fundamental communication skills and learn standard methods for presenting fashion design work.'
+        }
+      }
+    }
+  ];
+
+  const activeGradeData = grades.find(grade => grade.id === selectedGrade);
+  const activeOutcome = learningOutcomes.find(outcome => outcome.id === activeTab);
+
+  return (
+    <div className="max-w-5xl mx-auto p-4 bg-white rounded-lg shadow">
+      {/* Header Section */}
+      <div className="mb-8 text-center">
+        <h1 className="text-2xl font-bold mb-2">Fashion Design Sketchbook Feedback Tool</h1>
+        <p className="text-gray-600">Module FN4004 Design Process 1 - Element E1: SKETCHBOOK</p>
+        <p className="mt-2 text-sm bg-gray-100 p-3 rounded">
+          This interactive tool helps provide structured feedback aligned with Learning Outcomes and Grade Descriptors for the Fashion BA Sketchbook assessment.
+        </p>
+      </div>
+
+      {/* Grade Selection */}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold mb-3">Select Grade Band</h2>
+        <div className="flex flex-wrap gap-2 justify-center">
+          {grades.map(grade => (
+            <button
+              key={grade.id}
+              className={`px-4 py-2 rounded-md font-medium transition-all ${
+                selectedGrade === grade.id ? 
+                `${grade.color} ${grade.textColor} ring-2 ring-offset-2 ring-gray-400` : 
+                'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+              onClick={() => setSelectedGrade(grade.id)}
+            >
+              {grade.title} <span className="text-sm">{grade.range}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Selected Grade Header */}
+      <div className={`${activeGradeData.color} ${activeGradeData.textColor} p-4 rounded-lg mb-6`}>
+        <h2 className="text-xl font-bold">{activeGradeData.title} ({activeGradeData.range})</h2>
+        <p className="text-lg">
+          Overall Quality: {
+            selectedGrade === 'first-plus' ? 'Outstanding' :
+            selectedGrade === 'first' ? 'Very Good' :
+            selectedGrade === 'upper-second' ? 'Good' :
+            selectedGrade === 'lower-second' ? 'Satisfactory' :
+            selectedGrade === 'third' ? 'Adequate' :
+            selectedGrade === 'marginal-fail' ? 'Unsatisfactory' : 'Poor'
+          }
+        </p>
+      </div>
+
+      {/* Learning Outcome Tabs */}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold mb-3">Select Learning Outcome</h2>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {learningOutcomes.map(outcome => (
+            <button
+              key={outcome.id}
+              className={`px-3 py-2 rounded-md font-medium text-sm transition-all ${
+                activeTab === outcome.id ? 
+                'bg-blue-600 text-white' : 
+                'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+              onClick={() => setActiveTab(outcome.id)}
+            >
+              {outcome.title.split(':')[0]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Learning Outcome Content */}
+      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+        <h2 className="text-xl font-bold mb-2">{activeOutcome.title}</h2>
+        <p className="text-gray-700 mb-4">{activeOutcome.description}</p>
+        
+        <div className="mt-6 space-y-4">
+          <div className="bg-white p-4 rounded border border-gray-200">
+            <h3 className="font-bold text-green-700 mb-2">Strengths:</h3>
+            <p>{activeOutcome.feedback[selectedGrade].strength}</p>
+          </div>
+          
+          <div className="bg-white p-4 rounded border border-gray-200">
+            <h3 className="font-bold text-blue-700 mb-2">Evidence in Sketchbook:</h3>
+            <p>{activeOutcome.feedback[selectedGrade].evidence}</p>
+          </div>
+          
+          <div className="bg-white p-4 rounded border border-gray-200">
+            <h3 className="font-bold text-amber-700 mb-2">Areas for Improvement:</h3>
+            <p>{activeOutcome.feedback[selectedGrade].improvement}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Overall Advice for Selected Grade */}
+      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+        <h3 className="font-bold text-lg mb-3">How to improve your overall grade:</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          {selectedGrade === 'fail' && (
+            <>
+              <li>Develop basic understanding of research methods and design processes</li>
+              <li>Begin to analyze materials rather than just describing them</li>
+              <li>Improve documentation of your design development process</li>
+              <li>Show evidence of basic material investigation</li>
+              <li>Practice fundamental presentation techniques</li>
+            </>
+          )}
+          {selectedGrade === 'marginal-fail' && (
+            <>
+              <li>Strengthen your research with more diverse sources</li>
+              <li>Show clearer connections between research and design development</li>
+              <li>Improve organization and documentation of your design process</li>
+              <li>Conduct more thorough material investigations</li>
+              <li>Practice basic presentation techniques for more professional outcomes</li>
+            </>
+          )}
+          {selectedGrade === 'third' && (
+            <>
+              <li>Expand your research beyond obvious sources</li>
+              <li>Develop better analytical skills rather than just describing</li>
+              <li>Improve organization of your design development process</li>
+              <li>Conduct more detailed material investigations with clearer evaluation</li>
+              <li>Show more consistent professionalism in presentation</li>
+            </>
+          )}
+          {selectedGrade === 'lower-second' && (
+            <>
+              <li>Deepen your research and show stronger critical analysis</li>
+              <li>Make clearer connections between research and design development</li>
+              <li>Show more creative exploration in your design process</li>
+              <li>Enhance material investigations with more thoughtful evaluation</li>
+              <li>Improve consistency in professional presentation standards</li>
+            </>
+          )}
+          {selectedGrade === 'upper-second' && (
+            <>
+              <li>Extend research beyond expected sources with deeper critical analysis</li>
+              <li>Show more innovative connections between research and design</li>
+              <li>Demonstrate more creative exploration and risk-taking</li>
+              <li>Develop more sophisticated evaluation of materials and applications</li>
+              <li>Refine presentation techniques for more professional outcomes</li>
+            </>
+          )}
+          {selectedGrade === 'first' && (
+            <>
+              <li>Push research to discover unexpected connections and insights</li>
+              <li>Take more creative risks that result in innovative outcomes</li>
+              <li>Demonstrate exceptional critical thinking throughout</li>
+              <li>Perfect technical execution in all aspects</li>
+              <li>Explore innovative presentation methods while maintaining clarity</li>
+            </>
+          )}
+          {selectedGrade === 'first-plus' && (
+            <>
+              <li>Continue your outstanding work across all learning outcomes</li>
+              <li>Consider mentoring others to share your exceptional approach</li>
+              <li>Explore opportunities to showcase your work professionally</li>
+              <li>Maintain your excellent standard while continuing to innovate</li>
+            </>
+          )}
+        </ul>
+      </div>
+
+      {/* Footer Note */}
+      <div className="text-sm text-gray-500 mt-6 p-3 bg-gray-100 border-l-4 border-yellow-400">
+        <p>Note: This tool provides guidance based on Kingston School of Art Fashion BA grade descriptors. Always refer to official course documentation for definitive assessment criteria.</p>
+      </div>
+    </div>
+  );
+};
+
+export default FashionSketchbookFeedback;
